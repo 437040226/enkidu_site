@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Series on Blowfish</title>
+    <title>Series on Enkidu</title>
     <link>https://437040226.github.io/series/</link>
-    <description>Recent content in Series on Blowfish</description>
+    <description>Recent content in Series on Enkidu</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>© 2025 </copyright>
+    <language>zh-cn</language>
+    <managingEditor>437040226@qq.com (Enkidu)</managingEditor>
+    <webMaster>437040226@qq.com (Enkidu)</webMaster>
+    <copyright>Copyright @ 2025 GuoDou</copyright>
     <atom:link href="https://437040226.github.io/series/index.xml" rel="self" type="application/rss+xml" />
     
   </channel>

@@ -1,2 +1,2 @@
-hugo
+hugo --gc
 npm run algolia

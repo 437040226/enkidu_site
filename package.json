@@ -4,7 +4,7 @@
     "atomic-algolia": "^0.3.19"
   },
   "scripts": {
-    "build": "hugo --gc && atomic-algolia &&npm run algolia",
-    "algolia": "atomic-algolia"
+    "algolia": "atomic-algolia",
+    "build": "hugo --gc npm run algolia"
   }
 }

@@ -1,0 +1,2 @@
+hugo
+npm run algolia

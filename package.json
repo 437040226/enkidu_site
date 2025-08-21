@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "aplayer": "^1.10.1",
+    "atomic-algolia": "^0.3.19"
+  },
+  "scripts": {
+    "algolia": "atomic-algolia"
+  }
+}

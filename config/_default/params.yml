@@ -1,0 +1,324 @@
+########################################
+# Basic Configuration
+########################################
+
+# main menu navigation
+# for more icon information, please visit https://github.com/D-Sketon/hexo-theme-reimu/issues/30
+menu:
+  - name: home
+    url: ""
+    icon: "/images/Command_Spell.svg"
+  - name: about
+    url: "about"
+    icon: "/images/Command_Spell.svg"
+
+mainSections: ["post"]
+# 年，月，日及时间的格式化样式
+# Format style for year,month,date & time
+yearFormat: "2006"
+monthFormat: "2006-01"
+dateFormat: "2006-01-02"
+timeFormat: "2006-01-02 15:04:05"
+
+author: Enkidu
+description: "A website for Enkidu fans"
+subtitle: "A website for Enkidu fans"
+banner: "images/banner.webp"
+avatar: "avatar.webp"
+
+# Control the display of the post cover
+# If not set, the banner image will be displayed by default
+# Its priority is lower than the cover in the Front-matter
+cover: # https://example.com / false / rgb(255,117,117)
+
+# Control the display of the post toc
+# Its priority is lower than the toc in the Front-matter
+toc: false
+
+footer:
+  since: 2025 # 2020-current year
+  powered: false
+  count: false
+  busuanzi: false
+  icon:
+    url: "/images/Command_Spell.svg" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
+    rotate: false
+    mask: false # whether to use the images as a mask
+
+# Sidebar
+sidebar: left
+
+social:
+  bilibili: https://space.bilibili.com/38192827
+  github: https://github.com/437040226
+
+widgets:
+  - category
+  - tag
+  - tagcloud
+  - recent_posts
+
+# Widget behavior
+category_limits: 10
+tag_limits: 10
+recent_posts_limits: 5
+tagcloud_limits: 20
+
+# Archive behavior
+only_show_capsule_in_index: false # If you have hugo amounts of tags and categories, you can set this to true to only show the capsule in the index page for better performance
+
+# Sort order configuration
+# Available values: default, date, date-reverse, weight, weight-reverse
+# default: hugo's default sort order for page collections, see https://gohugo.io/quick-reference/page-collections/#sort
+# date: sorted by date in ascending order (oldest first)
+# date-reverse: sorted by date in descending order (newest first)
+# weight: sorted by weight in ascending order
+# weight-reverse: sorted by weight in descending order
+sort_order:
+  taxonomy:
+    category: date-reverse # controlled by categories_weight
+    tag: date-reverse # controlled by tags_weight
+  archive: date-reverse # controlled by weight
+  home: default # controlled by weight
+
+########################################
+# CSS
+########################################
+
+anchor_icon: "1F343" # default use '#' icon, you can use a hexadecimal representation of fontawesome or icon_font, like 'f0c1', you can also use false to hide anchor icon
+icon_font: 4552607_0khxww3tj3q9
+reimu_cursor:
+  enable: false
+  cursor:
+    default: ../images/cursor/reimu-cursor-default.png  # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
+    pointer: ../images/cursor/reimu-cursor-pointer.png
+    text: ../images/cursor/reimu-cursor-text.png
+
+# Font loading strategy
+# Custom Font -> Google Fonts -> Local FallBack Font
+
+# Custom Font
+custom_font:
+  enable: false
+  article:
+    # - css: https://fontsapi.zeoseven.com/292/main/result.css # font css
+    #   name: LXGW WenKai # font name
+
+font:
+  enable: false
+  article:
+    - "Mulish"
+    - "Noto Serif SC"
+
+# Local FallBack Font
+local_font:
+  article:
+    - "Noto Sans CJK SC"   # 跨平台中文字体
+    - "PingFang SC"        # macOS/iOS 中文
+    - "Microsoft YaHei"    # Windows 中文
+    - "-apple-system"       # Apple 英文
+    - "sans-serif"          # 最终回退
+
+dark_mode:
+  # true means that the dark mode is enabled by default
+  # false means that the dark mode is disabled by default
+  # auto means that the dark mode is automatically switched according to the system settings
+  enable: auto # true | false | auto
+
+########################################
+# Comment system
+########################################
+comment:
+  # comment system title
+  title:
+    zh-CN: 说些什么吧！
+    en: Leave a comment
+  default: waline # default comment system, when you enable multiple comment systems
+
+# https://waline.js.org/
+waline:
+  enable: true
+  serverURL: waline.enkidu.site
+  locale: {} # https://waline.js.org/guide/features/i18n.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80
+  emoji:
+    - https://unpkg.com/@waline/emojis@1.2.0/tieba
+    - https://unpkg.com/@waline/emojis@1.2.0/weibo
+    - https://unpkg.com/@waline/emojis@1.2.0/qq
+    - https://unpkg.com/@waline/emojis@1.2.0/bmoji
+    - https://unpkg.com/@waline/emojis@1.2.0/bilibili
+  meta:
+    - nick
+    - mail
+  requiredMeta:
+    - nick
+    - mail
+  wordLimit: 0
+  pageSize: 10
+  comment: true
+  pageview: true
+
+########################################
+# Search
+########################################
+
+algolia_search:
+  enable: true
+  appID: QWKIFILNH7
+  apiKey: 40380784964d33203b4b636d6302a9c1
+  indexName: enkidu_site
+  hits:
+    per_page: 10
+
+########################################
+# Animation
+########################################
+
+preloader:
+  enable: true
+  text:
+    zh-CN: 世人啊，冀以锁系神明...
+    en: Enuma Elish...
+  icon: "/images/Command_Spell.svg" # default use inline svg for fast speed, you can use a image url, like '/images/taichi.png'
+  rotate: false # whether to rotate the icon
+
+# see https://github.com/D-Sketon/aos.js
+animation:
+  enable: true
+  options:
+    header:
+      title: slide-up
+      subTitle: slide-down
+    home:
+      post: fade-up
+      widget: fade-up
+      sidebar: fade-up
+    article:
+      whole: fade-up
+      date: zoom-in
+      category: zoom-in
+      tag: zoom-in
+      comment: zoom-in
+      reading: zoom-in
+      nav: fade-up
+    archive:
+      whole: fade-up
+      tag: zoom-in
+      category: zoom-in
+      section: fade-up
+      nav: fade-up
+
+# see https://github.com/D-Sketon/mouse-firework
+firework:
+  enable: true
+  options:
+    excludeElements: ["a", "button"]
+    particles:
+      - shape: circle
+        move: ["emit"]
+        easing: easeOutExpo
+        colors: ["var(--red-1)", "var(--red-2)", "var(--red-3)", "var(--red-4)"]
+        number: 20
+        duration: [1200, 1800]
+        shapeOptions:
+          radius: [16, 32]
+          alpha: [0.3, 0.5]
+      - shape: circle
+        move: ["diffuse"]
+        easing: easeOutExpo
+        colors: ["var(--red-0)"]
+        number: 1
+        duration: [1200, 1800]
+        shapeOptions:
+          radius: 20
+          alpha: [0.2, 0.5]
+          lineWidth: 6
+
+########################################
+# Extended features
+########################################
+
+# Back To Top
+top:
+  enable: true
+  position: right # left or right
+  icon:
+    url: "/images/Command_Spell.svg" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
+    rotate: false
+    mask: false # whether to use the images as a mask
+
+# https://github.com/CodeByZach/pace
+pace:
+  enable: false
+########################################
+# Experimental features
+########################################
+
+# Experimental, may have a lot of bugs, open with caution!
+pjax:
+  enable: true
+
+# Experimental
+# https://github.com/GoogleChromeLabs/quicklink
+quicklink:
+  enable: true
+  # The `requestIdleCallback` timeout, in milliseconds.
+  timeout: 3000
+  # Whether or not the URLs within the options.el container should be treated as high priority.
+  # When true, quicklink will attempt to use the fetch() API if supported (rather than link[rel=prefetch]).
+  priority: true
+  # Determine if a URL should be prefetched.
+  # Only support string
+  ignores: []
+# Experimental
+# Please turn on pjax to use this feature
+player:
+  # if you enable meting, you must enable aplayer first
+  aplayer:
+    # https://github.com/DIYgod/APlayer
+    enable: true
+    options:
+      fixed: false
+      loop: all
+      order: list
+      preload: auto
+      volume: 0.7
+      mutex: true
+      listFolded: false
+  meting:
+    # https://github.com/metowolf/MetingJS
+    # if you want to use meting, please enable aplayer first
+    enable: true
+    options:
+      id: 14152047010
+      server: netease
+      type: playlist
+
+########################################
+# Theme
+########################################
+
+# experimental, may have a lot of bugs, open with caution!
+# A dynamic color generation tool based on Google's Material You design guidelines, capable of extracting primary colors from any image and generating complete light and dark color schemes.
+material_theme:
+  # more information: https://github.com/2061360308/material-theme
+  # notice: when you enable this feature, all the covers will be automatically added "crossorigin" attribute to support the dynamic color scheme
+  # so make sure your custom covers will not be blocked by the browser's CORS policy
+  enable: false # enable material_theme to generate dynamic color schemes based on the banner image
+
+internal_theme:
+  light:
+    --red-0: "#006400" # 深森林绿
+    --red-1: "#008000" # 标准绿色
+    --red-2: "#32CD32" # 石灰绿
+    --red-3: "#90EE90" # 浅薄荷绿
+    --red-4: "#C1F0C1" # 淡薄荷绿
+    --red-5: "#E0F7E0" # 极淡绿
+    --red-5-5: "#E8F8E8" # 超浅绿
+    --red-6: "#F2FCF2" # 几乎白色
+    --color-red-6-shadow: "rgba(50, 205, 50, 0.6)" # 石灰绿阴影
+    --color-red-3-shadow: "rgba(144, 238, 144, 0.3)" # 薄荷绿阴影
+  dark:
+    --red-4: "rgba(193, 240, 193, 0.5)" # 淡薄荷绿半透明
+    --red-5: "rgba(224, 247, 224, 0.15)" # 极淡绿半透明
+    --red-5-5: "rgba(232, 248, 232, 0.05)" # 超浅绿半透明
+    --red-6: "rgba(242, 252, 242, 0.2)" # 浅背景绿半透明

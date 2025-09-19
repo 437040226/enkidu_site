@@ -154,8 +154,6 @@ waline:
     - mail
   wordLimit: 0
   pageSize: 10
-  comment: true
-  pageview: true
 
 ########################################
 # Search

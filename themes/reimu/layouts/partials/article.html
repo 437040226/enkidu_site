@@ -67,7 +67,7 @@
         >
           <span
             class="post-comments-count waline-comment-count"
-            data-path="{{ .Permalink | urlize }}"
+            data-path="{{ .Permalink | relURL }}"
             itemprop="commentCount"
           ></span>
           {{ i18n "comment" }}

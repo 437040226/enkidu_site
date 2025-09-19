@@ -154,7 +154,7 @@ waline:
     - mail
   wordLimit: 0
   pageSize: 10
-  comment: true
+  comment: false
   pageview: true
 
 ########################################

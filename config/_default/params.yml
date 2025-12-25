@@ -26,6 +26,16 @@ subtitle: "恩奇都粉丝应援网站"
 banner: "images/banner.webp"
 avatar: "avatar.webp"
 
+# If you want to use the srcset attribute, please enable it
+banner_srcset:
+  enable: true
+  srcset:
+    - src: "images/banner-600w.webp"
+      media: "(max-width: 479px)"
+    - src: "images/banner-800w.webp"
+      media: "(max-width: 799px)"
+    - src: "images/banner.webp"
+      media: "(min-width: 800px)"
 # Control the display of the post cover
 # If not set, the banner image will be displayed by default
 # Its priority is lower than the cover in the Front-matter

@@ -1,5 +1,6 @@
-<img src="https://cdn.jsdelivr.net/gh/D-Sketon/hugo-theme-reimu@main/images/screenshot.png"/>
+
 <div align = center>
+  <img src="https://fastly.jsdelivr.net/gh/D-Sketon/blog-img/icon.png"/>
   <h1>hugo-theme-reimu</h1>
   <img alt="version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FD-Sketon%2Fhugo-theme-reimu%2Fraw%2Fmain%2Fpackage.json&query=%24.version&label=version">
   <img alt="GitHub License" src="https://img.shields.io/github/license/D-Sketon/hugo-theme-reimu">
@@ -13,6 +14,7 @@
 
 [简体中文](https://github.com/D-Sketon/hugo-theme-reimu/blob/main/README.md) | English
 
+<img src="https://cdn.jsdelivr.net/gh/D-Sketon/hugo-theme-reimu@main/images/screenshot.png"/>
 </div>
 
 A Hakurei Reimu style Hugo theme. Migrated from [hexo-theme-reimu](https://github.com/D-Sketon/hexo-theme-reimu).
@@ -22,8 +24,8 @@ A Hakurei Reimu style Hugo theme. Migrated from [hexo-theme-reimu](https://githu
 | framework                    | repository                                                         | version                                                                                                                                                                                     | stars                                                                                              |
 | ---------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | [Hexo](https://hexo.io/)     | [hexo-theme-reimu](https://github.com/D-Sketon/hexo-theme-reimu)   | <img alt="version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FD-Sketon%2Fhexo-theme-reimu%2Fraw%2Fmain%2Fpackage.json&query=%24.version&label=version">  | <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/D-Sketon/hexo-theme-reimu">  |
-| [Astro](https://astro.build) | [astro-theme-reimu](https://github.com/D-Sketon/astro-theme-reimu) | <img alt="version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FD-Sketon%2Fastro-theme-reimu%2Fraw%2Fmain%2Fpackage.json&query=%24.version&label=version"> | <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/D-Sketon/astro-theme-reimu"> |
 | [Hugo](https://gohugo.io)    | [hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu)   | <img alt="version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FD-Sketon%2Fhugo-theme-reimu%2Fraw%2Fmain%2Fpackage.json&query=%24.version&label=version">  | <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/D-Sketon/hugo-theme-reimu">  |
+| [Astro](https://astro.build) | [astro-theme-reimu](https://github.com/D-Sketon/astro-theme-reimu) | <img alt="version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FD-Sketon%2Fastro-theme-reimu%2Fraw%2Fmain%2Fpackage.json&query=%24.version&label=version"> | <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/D-Sketon/astro-theme-reimu"> |
 
 **ISSUE and PR Welcome!**
 
@@ -52,6 +54,7 @@ A Hakurei Reimu style Hugo theme. Migrated from [hexo-theme-reimu](https://githu
   - Twikoo
   - Gitalk
   - Giscus
+  - Disqus
 
 ### Statistics & Analytics
 
@@ -72,7 +75,7 @@ A Hakurei Reimu style Hugo theme. Migrated from [hexo-theme-reimu](https://githu
 
 ### Navigation & Structure
 
-- 📑 Table of Contents (TOC)
+- 📑 Table of Contents
 - 🔄 PJAX support
 - 🔧 ServiceWorker implementation
 - 📰 RSS feed
@@ -81,13 +84,16 @@ A Hakurei Reimu style Hugo theme. Migrated from [hexo-theme-reimu](https://githu
 
 - 🎨 Icon support:
   - Iconfont
-  - FontAwesome
-- 🔗 Custom shortcodes for:
+  - FontAwesome7
+- 🔗 Built-in shortcodes:
   - Internal links
   - External links
   - Friend links
   - Heatmap
   - Tag Roulette
+  - Alert Blockquote
+  - Tabs
+  - Gallery
 - 🎨 Dynamic theme color adaptation
 - ©️ Article copyright declaration
 - 🌐 Custom CDN source / local source configuration
@@ -245,6 +251,126 @@ banner: "images/banner.webp"
 
 The favicon is saved at `themes/hugo-theme-reimu/static/favicon.ico`. You can replace it with your own file.
 
+#### Article Summary
+
+Disabled by default. You can choose to display the article summary in the subtitle or at the beginning of the article.
+
+```yaml
+summary:
+  enable: false
+  style: 'subtitle' # 'subtitle' or 'blockquote'
+```
+
+</details>
+
+<details>
+
+<summary>Sidebar</summary>
+
+### Sidebar
+
+#### Sidebar Position
+
+Default on the right. You can modify it in the inner `_config.yml`.
+
+```yaml
+sidebar: right # left | right
+```
+
+Additionally, you can control it through the article's front-matter, which takes precedence over the global configuration.
+
+```yaml
+---
+sidebar: left # left | right
+---
+```
+
+#### TOC
+
+Default enabled. You can modify it in the inner `_config.yml`.
+
+```yaml
+toc: true # true | false
+```
+
+Additionally, you can control it through the article's front-matter, which takes precedence over the global configuration.
+
+```yaml
+---
+toc: true # true | false
+---
+```
+
+#### Social Links
+
+You can configure the social links in the sidebar in the inner `_config.yml`.
+
+```yaml
+social:
+  # github: https://github.com/yourname
+  # bilibili: https://space.bilibili.com/yourname
+  # ...
+```
+
+#### Widgets
+
+You can configure the widgets in the sidebar in the inner `_config.yml`.
+
+```yaml
+widgets:
+  - category
+  - tag
+  - tagcloud
+  - recent_posts
+```
+
+You can also configure the behavior of the widgets through the following configuration:
+
+```yaml
+category_limits: 10
+tag_limits: 10
+recent_posts_limits: 5
+tagcloud_limits: 20
+```
+
+</details>
+<details>
+<summary>Footer</summary>
+
+### Footer
+
+#### Basic Information
+
+The footer section allows you to configure basic display information and statistics.
+
+```yaml
+footer:
+  since: 2020 # The starting year displayed in the copyright information (e.g., 2020-current year)
+  powered: true # Whether to display copyright information
+  count: true # Whether to display word count and reading time statistics
+  busuanzi: true # Whether to enable Busuanzi visitor counting statistics
+```
+
+#### ICP Filing
+
+For websites hosted in mainland China, you can display ICP filing information as required by regulations.
+
+```yaml
+icp:
+  icpnumber: # ICP filing number
+  beian: # Public Security Bureau filing number
+  recordcode: # Record code parameter from the Public Security Bureau filing link
+```
+
+#### Moe ICP Filing (v0.12.1+)
+
+[Moe ICP Filing](https://icp.gov.moe/)
+
+```yaml
+moe_icp:
+  icpnumber: # Moe ICP filing number
+```
+
 </details>
 <details>
 <summary>Code Blocks</summary>
@@ -386,6 +512,16 @@ gitalk:
   owner: "repo owner"
   admin: "repo owner and collaborators"
   md5: false # Whether to use md5 to encrypt the path
+```
+
+If using [Disqus](https://disqus.com/)  
+Please set `disqus.enable` to `true` in the inner `params.yml`, and fill in your `shortname`
+
+```yml
+disqus:
+  enable: true
+  shortname: "your shortname"
+  count: true # Whether to enable comment count statistics
 ```
 
 </details>
@@ -711,6 +847,15 @@ sponsor: true # Show sponsorship QR codes?
 
 Uses Aplayer + Meting (optional), disabled by default
 
+##### Music Player Position (v0.12.1+)
+
+Default is after sidebar
+
+```yml
+player:
+  position: before_sidebar # before_sidebar / after_sidebar / after_widget
+```
+
 ##### Pure Aplayer
 
 Set `player.aplayer.enable` to `true` and configure `player.aplayer.options` according to [Aplayer Docs](https://aplayer.js.org/#/home?id=options)
@@ -792,48 +937,77 @@ home_categories:
       cover:
 ```
 
+#### Injector (v0.6.3+)
+
+Used to inject custom code, similar to [Hexo#Injector](https://hexo.io/api/injector), supports `head`, `body` and `sidebar` injection
+
+```yaml
+injector:
+  head_begin: # Inject code snippet right after <head>
+  head_end: # Inject code snippet right before </head>
+  body_begin: # Inject code snippet right after <body>
+  body_end: # Inject code snippet right before </body>
+  sidebar_begin: # Inject code snippet right after <aside>
+  sidebar_end: # Inject code snippet right before </aside>
+```
+
+#### Triangle Badge (v0.13.2+)
+
+Disabled by default. When enabled, it will display a triangle badge in the upper right corner, supporting custom links and icons.
+
+```yaml
+triangle_badge:
+  enable: false
+  icon: github # Same as the icon in the social config
+  link: https://github.com/D-Sketon/hexo-theme-reimu
+```
+
 </details>
 
 <details>
-<summary>Built-in Card Shortcodes</summary>
+<summary>Built-in Shortcodes</summary>
 
-### Built-in Card Shortcodes
+### Built-in Shortcodes
 
 #### friendLink Card
 
-```yaml
+```markdown
 {{< friendsLink >}}
 ```
 
 No parameters, directly reads from the `data/friends.yml` file
 
-#### postLinkCard - Internal Link Card
+#### postLinkCard - Internal Link Card (Not recommended, use Link Card instead)
 
-```yaml
+```markdown
 {{<postLinkCard path="?" cover="?" escape="?" >}}
 ```
 
+Not recommended for use. It is advised to use the `link` shortcode instead.
+
 The first parameter is the article's `path`; the second parameter (optional) is the cover image shown on the card - if set to `auto`, it will automatically use the blog's `banner`; the third parameter (optional, `true | false`) indicates whether the article title should be escaped
 
-#### externalLinkCard - External Link Card
+#### externalLinkCard - External Link Card (Not recommended, use Link Card instead)
 
-```yaml
+```markdown
 {{<externalLinkCard title="?" link="?" cover="?">}}
 ```
 
+Not recommended for use. It is advised to use the `link` shortcode instead.
+
 The first parameter is the article's title; the second parameter is the external link to the article; the third parameter (optional) is the cover image shown on the card - if set to `auto`, it will automatically use the default cover
 
-#### Heat Map Card Article Heatmap (Experimental Feature in v0.8.0+)
+#### Heat Map Card Article Heatmap (v0.8.0+)
 
-```yaml
+```markdown
 {{< heatMapCard levelStandard="?" >}}
 ```
 
 The first parameter is the level standard for the heatmap (graded based on the word count of the articles), with the default value being `"1000,5000,10000"`.
 
-#### tagRoulette (Experimental Feature in v0.12.0+)
+#### tagRoulette (v0.12.0+)
 
-```yaml
+```markdown
 {{< tagRoulette tags="?" icon="?" >}}
 ```
 
@@ -841,10 +1015,100 @@ tagRoulette is an interactive element that provides a random tag display feature
 
 - tags: Optional parameter specifying the tag pool. Multiple tags should be separated by English commas (,). If not provided, a few example tags will be used by default. Example: `tags="memory decline, loss of expression, increased laziness, numbness, so sleepy"`
 - icon: Optional parameter to customize the trigger button's icon. Default: 🕹️ (game controller emoji), can be replaced with any emoji or text, such as 🎲, 🎯, 🔄, etc.
+
+#### alertBlockquote (v0.12.1+)
+
+```markdown
+{{< alertBlockquote type="?" >}}
+Your content here
+{{</alertBlockquote>}}
+```
+
+It is applicable to scenarios where Hugo v0.132.0 or lower cannot use Hugo Blockquote render hooks.
+
+The first parameter is the type of block quote, with the following optional parameters: `note`, `tip`, `important`, `warning`, `danger`
+
+#### Link Card (v0.14.0+)
+
+```markdown
+{{< link title="?" link/path="?" cover="?" escape="?" >}}
+```
+
+An upgraded version of `externalLinkCard` and `postLinkCard`, recommended for use.
+
+- **title**: The title of the link card. Can be omitted for internal links, in which case the article title will be used automatically.
+- **link/path**: The URL of the link. For compatibility, both `link` and `path` can be used, and they have the same effect.
+- **cover**: The cover image displayed on the card. If set to `auto`, the blog's `banner` or a default cover will be used automatically.
+- **escape**: Whether the article title should be escaped. Values are `true | false`, with `true` as the default.
+
+#### Tabs (v0.14.0+)
+
+```markdown
+{{< tabs [activeTab] ["center"] >}}
+<!-- tabName -->
+Tab content
+<!-- tabName -->
+Tab content
+{{< /tabs >}}
+```
+
+Adapted from the next, volantis, and stellar themes, this feature supports creating tabbed switching effects within articles.
+
+- activeTab: Optional parameter, specifies the default active tab index (counting starts from 1). Default is 1.
+- "center": Optional parameter, specifies that tab titles should be center-aligned. Default is left-aligned.
+- tabName: The title of each tab, must be wrapped in `<!-- tabName -->`. Supports displaying icons using `@` + icon hexadecimal code. Examples:
+  - Title only: `<!-- Title -->`
+  - Icon only: `<!-- @e60c -->`
+  - Icon + Title: `<!-- Title@e60c -->`
+
+#### Gallery Photo Wall (v0.14.0+)
+
+```markdown
+{{< gallery >}}
+![alt text](image_url1)
+![alt text](image_url2)
+...
+{{</gallery>}}
+
+Display multiple images in a photo wall format, supporting automatic arrangement and responsive layout.
+
+#### grid Grid Layout (v0.14.1+)
+
+```markdown
+{{< grid width=? col=? >}}
+<!-- cell -->
+Content 1
+<!-- cell -->
+Content 2
+<!-- cell -->
+Content 3
+{{< /grid >}}
+```
+
+Display content in a grid layout with responsive design.
+
+- width: Optional parameter, sets the minimum column width, e.g., `300` means a minimum column width of 300px. Default is `240`
+- col: Optional parameter, sets a fixed number of columns, e.g., `3` means a fixed 3-column layout. Default is auto column count
+- Use `<!-- cell -->` to separate each grid cell, and each cell's content will be rendered independently
+
+#### details Foldable Panel (v0.14.1+)
+
+```markdown
+{{< details summary="?" >}}
+Content
+{{< /details >}}
+```
+
+Create a foldable panel in the article.
+
+- summary: Optional parameter, set the title of the foldable panel
+
 </details>
 
 <details>
 <summary>Customize theme</summary>
+
+### Customize theme
 
 #### Dynamic Theme Color Adaptation (Experimental Feature in v0.8.0+)
 
@@ -879,40 +1143,46 @@ internal_theme:
     --color-red-6-shadow: "rgba(255, 78, 78, 0.6)"
     --color-red-3-shadow: "rgba(255, 78, 78, 0.3)"
 
-    --highlight-nav: "#e6e6e6"
+    --highlight-nav: "#f5f5f5"
     --highlight-scrollbar: "#d6d6d6"
-    --highlight-background: "#f7f7f7"
-    --highlight-current-line: "#dadada"
-    --highlight-selection: "#e9e9e9"
-    --highlight-foreground: "#4d4d4d"
+    --highlight-background: "#fdfdfd"
+    --highlight-selection: "#e9e9e988"
+    --highlight-foreground: "#24292e"
     --highlight-comment: "#7d7d7d"
-    --highlight-red: "#c8362b"
-    --highlight-orange: "#b66014"
+    --highlight-red: "#d73a49"
+    --highlight-orange: "#e36209"
     --highlight-yellow: "#cb911d"
-    --highlight-green: "#2ea52e"
-    --highlight-aqua: "#479d9d"
-    --highlight-blue: "#1973b8"
-    --highlight-purple: "#7135ac"
+    --highlight-green: "#22863a"
+    --highlight-aqua: "#005cc5"
+    --highlight-blue: "#032f62"
+    --highlight-purple: "#6f42c1"
+    --highlight-deletion: "#b31d28"
+    --highlight-deletion-bg: "#ffeef0"
+    --highlight-addition: "#22863a"
+    --highlight-addition-bg: "#f0fff4"
   dark:
     --red-4: "rgba(255, 208, 208, 0.5)"
     --red-5: "rgba(255,228,228,0.15)"
     --red-5-5: "rgba(255,236,236,0.05)"
     --red-6: "rgba(255, 243, 243, 0.2)"
 
-    --highlight-nav: "#2e353f"
+    --highlight-nav: "#222830"
     --highlight-scrollbar: "#454d59"
-    --highlight-background: "#22272e"
-    --highlight-current-line: "#393939"
-    --highlight-selection: "#515151"
-    --highlight-foreground: "#cccccc"
-    --highlight-comment: "#999999"
-    --highlight-red: "#f47067"
-    --highlight-orange: "#f69d50"
+    --highlight-background: "#1e2027"
+    --highlight-selection: "#51515155"
+    --highlight-foreground: "#c9d1d9"
+    --highlight-comment: "#8b949e"
+    --highlight-red: "#ff7b72"
+    --highlight-orange: "#ffa657"
     --highlight-yellow: "#ffcc66"
-    --highlight-green: "#99cc99"
-    --highlight-aqua: "#66cccc"
-    --highlight-blue: "#54b6ff"
-    --highlight-purple: "#dcbdfb"
+    --highlight-green: "#7ee787"
+    --highlight-aqua: "#a5d6ff"
+    --highlight-blue: "#79c0ff"
+    --highlight-purple: "#d2a8ff"
+    --highlight-deletion: "#ffa198"
+    --highlight-deletion-bg: "#490202"
+    --highlight-addition: "#7ee787"
+    --highlight-addition-bg: "#04260f"
 ```
 
 #### Customize theme font
@@ -1089,9 +1359,42 @@ Both formats are supported. It's recommended to use SRI verification for externa
 
 </details>
 
+<details>
+<summary>Front-matter Fields</summary>
+
+### Front-matter Fields
+
+| meta        | Description                                                                | Type                         | Value Logic                               | Version       |
+| ----------- | -------------------------------------------------------------------------- | ---------------------------- | ----------------------------------------- | ------------- |
+| title       | Title                                                                      | `string`                     | -                                         | Hugo Built-in |
+| date        | Article creation time                                                      | `datetime`                   | -                                         | Hugo Built-in |
+| lastmod     | Article last modified time                                                 | `datetime`                   | -                                         | Hugo Built-in |
+| summary     | Article summary                                                            | `string`                     | -                                         | Hugo Built-in |
+| weight      | Article weight, used for sorting/pinning                                   | `int`                        | -                                         | Hugo Built-in |
+| categories  | Article categories                                                         | `string[]`                   | -                                         | 0.0.1         |
+| tags        | Article tags                                                               | `string[]`                   | -                                         | 0.0.1         |
+| description | Article description                                                        | `string`                     | -                                         | 0.0.1         |
+| mermaid     | Whether to enable mermaid (requires configuration with `mermaid` settings) | `boolean`                    | `false`                                   | 0.0.1         |
+| math        | Whether to enable LaTeX (requires configuration with `math` settings)      | `boolean`                    | `false`                                   | 0.0.1         |
+| link        | Directs the article to an external link                                    | `string`                     | -                                         | 0.0.1         |
+| copyright   | Whether to enable article copyright notice                                 | `boolean`                    | Defaults to global config if not provided | 0.0.1         |
+| sponsor     | Whether to enable article sponsorship                                      | `boolean`                    | Defaults to global config if not provided | 0.0.1         |
+| comments    | Whether to enable article comments                                         | `boolean`                    | Defaults to global config if not provided | 0.0.1         |
+| photos      | Article photo gallery                                                      | `string[]`                   | -                                         | 0.0.1         |
+| sidebar     | Article sidebar position                                                   | `false \| 'left' \| 'right'` | Defaults to global config if not provided | 0.5.0         |
+| toc         | Whether to enable article table of contents                                | `boolean`                    | Defaults to global config if not provided | 0.7.0         |
+| outdated    | Whether the article is outdated                                            | `boolean`                    | Defaults to global config if not provided | 0.13.1        |
+| author      | Article author (used for article copyright and sharing cards)              | `string`                     | Defaults to global config if not provided | 0.13.2        |
+| keywords    | Article keywords for SEO                                                   | `string[] \| string`         | Defaults to global config if not provided | 0.13.4        |
+</details>
+
 ## Contributors
 
 [![](https://contributors-img.web.app/image?repo=D-Sketon/hugo-theme-reimu)](https://github.com/D-Sketon/hugo-theme-reimu/graphs/contributors)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=D-Sketon/hugo-theme-reimu&type=date&legend=top-left)](https://www.star-history.com/#D-Sketon/hugo-theme-reimu&type=date&legend=top-left)
 
 ## License
 

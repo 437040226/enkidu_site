@@ -8,6 +8,9 @@ menu:
   - name: home
     url: ""
     icon: "/images/Command_Spell.svg"
+  - name: archives
+    url: "archives"
+    icon: "/images/Command_Spell.svg"
   - name: about
     url: "about"
     icon: "/images/Command_Spell.svg"
@@ -21,8 +24,8 @@ dateFormat: "2006-01-02"
 timeFormat: "2006-01-02 15:04:05"
 
 author: Enkidu
-description: "恩奇都粉丝网站"
-subtitle: "恩奇都粉丝网站"
+description: "恩奇都粉丝应援网站"
+subtitle: "恩奇都粉丝应援网站"
 banner: "images/banner.webp"
 avatar: "avatar.webp"
 
@@ -33,7 +36,8 @@ cover: # https://example.com / false / rgb(255,117,117)
 
 # Control the display of the post toc
 # Its priority is lower than the toc in the Front-matter
-toc: false
+toc: true
+
 
 footer:
   since: 2025 # 2020-current year
@@ -66,6 +70,7 @@ tagcloud_limits: 20
 
 # Archive behavior
 only_show_capsule_in_index: false # If you have hugo amounts of tags and categories, you can set this to true to only show the capsule in the index page for better performance
+
 
 # Sort order configuration
 # Available values: default, date, date-reverse, weight, weight-reverse
@@ -248,7 +253,7 @@ top:
 
 # https://github.com/CodeByZach/pace
 pace:
-  enable: false
+  enable: true
 ########################################
 # Experimental features
 ########################################

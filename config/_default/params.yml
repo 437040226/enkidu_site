@@ -8,6 +8,9 @@ menu:
   - name: home
     url: ""
     icon: "/images/Command_Spell.svg"
+  - name: archives
+    url: "archives"
+    icon: "/images/Command_Spell.svg"
   - name: about
     url: "about"
     icon: "/images/Command_Spell.svg"
@@ -48,7 +51,7 @@ toc: true
 
 footer:
   since: 2025 # 2020-current year
-  powered: false
+  powered: true
   count: false
   busuanzi: false
   icon:

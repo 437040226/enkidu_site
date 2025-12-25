@@ -8,9 +8,6 @@ menu:
   - name: home
     url: ""
     icon: "/images/Command_Spell.svg"
-  - name: archives
-    url: "archives"
-    icon: "/images/Command_Spell.svg"
   - name: about
     url: "about"
     icon: "/images/Command_Spell.svg"

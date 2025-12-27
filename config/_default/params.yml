@@ -39,10 +39,6 @@ banner_srcset:
       media: "(max-width: 799px)"
     - src: "images/banner.webp"
       media: "(min-width: 800px)"
-# Control the display of the post cover
-# If not set, the banner image will be displayed by default
-# Its priority is lower than the cover in the Front-matter
-cover: # https://example.com / false / rgb(255,117,117)
 
 # Control the display of the post toc
 # Its priority is lower than the toc in the Front-matter
@@ -81,6 +77,12 @@ tagcloud_limits: 20
 # Archive behavior
 only_show_capsule_in_index: false # If you have hugo amounts of tags and categories, you can set this to true to only show the capsule in the index page for better performance
 
+# triangle badge
+# 打开后会在右上角展示三角徽标，支持自定义链接和图标
+triangle_badge:
+  enable: true
+  icon: qq # 与 social 配置里的 icon 相同
+  link: https://qm.qq.com/q/mG7VhRmymA
 
 # Sort order configuration
 # Available values: default, date, date-reverse, weight, weight-reverse
@@ -95,6 +97,9 @@ sort_order:
     tag: date-reverse # controlled by tags_weight
   archive: date-reverse # controlled by weight
   home: default # controlled by weight
+
+layout:
+  max_width: 1600px # the max width of the main content area
 
 ########################################
 # CSS
@@ -260,6 +265,21 @@ top:
     url: "/images/Command_Spell.svg" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
     rotate: false
     mask: false # whether to use the images as a mask
+
+# Share
+share:
+  - qq
+  - weixin
+  - weibo
+
+# show categories card on home page
+home_categories:
+  enable: false
+  content:
+    - categories: "日志" # string (single-layer category) or array (multi-layer category)
+      cover: # empty means random cover
+    - categories: "游戏"
+      cover:
 
 # https://github.com/CodeByZach/pace
 pace:

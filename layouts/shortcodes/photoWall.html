@@ -1,0 +1,291 @@
+{{- /* 参数配置 */ -}}
+{{- $folder := .Get "folder" | default "images" -}}
+{{- $sitePath := printf "static/%s" $folder -}}
+{{- $webPath := printf "/%s" $folder -}}
+{{- $recursive := .Get "recursive" | default false -}}
+{{- $sort := .Get "sort" | default "natural" -}}
+{{- $limit := .Get "limit" | default 0 -}}
+{{- $galleryId := printf "photoWall-%s" (substr (md5 (printf "static-%s-%v" $folder $recursive)) 0 9) -}}
+
+{{- /* 获取 static 目录中的文件 */ -}}
+{{- $imageUrls := slice -}}
+{{- $imageFiles := slice -}}
+
+{{- if fileExists $sitePath -}}
+  {{- /* 读取目录 */ -}}
+  {{- $dir := readDir $sitePath -}}
+  
+  {{- /* 支持的图片扩展名 */ -}}
+  {{- $imageExts := slice ".jpg" ".jpeg" ".png" ".gif" ".webp" ".bmp" ".tiff" ".svg" -}}
+  
+  {{- range $dir -}}
+    {{- $filePath := printf "%s/%s" $sitePath .Name -}}
+    {{- $webFilePath := printf "%s/%s" $webPath .Name -}}
+    
+    {{- if .IsDir -}}
+      {{- /* 如果是目录且需要递归 */ -}}
+      {{- if $recursive -}}
+        {{- $subDir := readDir $filePath -}}
+        {{- range $subDir -}}
+          {{- $subFilePath := printf "%s/%s" $filePath .Name -}}
+          {{- $subWebPath := printf "%s/%s/%s" $webPath (path.Base $filePath) .Name -}}
+          
+          {{- if not .IsDir -}}
+            {{- $ext := path.Ext .Name | lower -}}
+            {{- if in $imageExts $ext -}}
+              {{- $imageUrls = $imageUrls | append $subWebPath -}}
+              {{- $imageFiles = $imageFiles | append (dict "path" $subWebPath "name" .Name "fullName" .Name) -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- else -}}
+      {{- /* 如果是文件，检查是否为图片 */ -}}
+      {{- $ext := path.Ext .Name | lower -}}
+      {{- if in $imageExts $ext -}}
+        {{- $imageUrls = $imageUrls | append $webFilePath -}}
+        {{- $imageFiles = $imageFiles | append (dict "path" $webFilePath "name" .Name "fullName" .Name) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- /* 自然排序函数 */ -}}
+  {{- $naturalSorted := slice -}}
+  {{- if or (eq $sort "natural") (eq $sort "name") -}}
+    {{- /* 提取排序键：将文件名按数字和非数字部分拆分 */ -}}
+    {{- $filesWithKeys := slice -}}
+    {{- range $imageFiles -}}
+      {{- $name := .name -}}
+      {{- /* 将文件名拆分为数字和非数字部分 */ -}}
+      {{- $parts := slice -}}
+      {{- $current := "" -}}
+      {{- $isDigit := false -}}
+      
+      {{- /* 遍历文件名中的每个字符 */ -}}
+      {{- range split $name "" -}}
+        {{- $charIsDigit := findRE "[0-9]" . -}}
+        {{- if and $current (ne (len $charIsDigit) (len (findRE "[0-9]" $current))) -}}
+          {{- /* 字符类型改变，保存当前部分 */ -}}
+          {{- $parts = $parts | append $current -}}
+          {{- $current = . -}}
+          {{- $isDigit = not $isDigit -}}
+        {{- else -}}
+          {{- $current = printf "%s%s" $current . -}}
+          {{- if not $current -}}
+            {{- $isDigit = len $charIsDigit | gt 0 -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if $current -}}
+        {{- $parts = $parts | append $current -}}
+      {{- end -}}
+      
+      {{- /* 创建排序键：将数字部分补零对齐 */ -}}
+      {{- $sortKey := "" -}}
+      {{- range $parts -}}
+        {{- if findRE "^[0-9]+$" . -}}
+          {{- /* 数字部分：补零到20位 */ -}}
+          {{- $padded := printf "%020s" . -}}
+          {{- $sortKey = printf "%s%s" $sortKey $padded -}}
+        {{- else -}}
+          {{- /* 非数字部分：保持原样 */ -}}
+          {{- $sortKey = printf "%s%s" $sortKey . -}}
+        {{- end -}}
+      {{- end -}}
+      
+      {{- $filesWithKeys = $filesWithKeys | append (dict "path" .path "name" .name "sortKey" $sortKey) -}}
+    {{- end -}}
+    
+    {{- /* 按排序键排序 */ -}}
+    {{- if eq $sort "natural" -}}
+      {{- $filesWithKeys = sort $filesWithKeys "sortKey" -}}
+    {{- else if eq $sort "name" -}}
+      {{- $filesWithKeys = sort $filesWithKeys "name" -}}
+    {{- end -}}
+    
+    {{- /* 提取排序后的路径 */ -}}
+    {{- range $filesWithKeys -}}
+      {{- $naturalSorted = $naturalSorted | append .path -}}
+    {{- end -}}
+    
+    {{- $imageUrls = $naturalSorted -}}
+  {{- else if eq $sort "random" -}}
+    {{- $imageUrls = shuffle $imageUrls -}}
+  {{- end -}}
+  
+  {{- /* 限制数量 */ -}}
+  {{- if gt $limit 0 -}}
+    {{- $imageUrls = first $limit $imageUrls -}}
+  {{- end -}}
+{{- else -}}
+  {{- warnf "PhotoWall: Static folder '%s' does not exist" $sitePath -}}
+{{- end -}}
+
+<div class="gallery-wall" id="{{ $galleryId }}"></div>
+<script>
+  (function() {
+    const imageUrls = JSON.parse({{ $imageUrls | jsonify }});
+    let images = [];
+    const wallId = '#{{ $galleryId }}';
+    let resizeTimer;
+    let lastWidth = 0;
+    
+    // 辅助函数：替代你原本的 _$ 函数
+    function $(selector) {
+      return document.querySelector(selector);
+    }
+    
+    function init() {
+      createInitialDOM();
+      loadImages();
+      const wall = $(wallId);
+      if (wall && window.ResizeObserver) {
+        const observer = new ResizeObserver((entries) => {
+          const newWidth = entries[0].contentRect.width;
+          if (Math.abs(newWidth - lastWidth) > 1) {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(renderPhotoWall, 250);
+          }
+        });
+        observer.observe(wall);
+      } else {
+        window.addEventListener('resize', handleResize);
+      }
+    }
+    
+    function createInitialDOM() {
+      const wall = $(wallId);
+      if (!wall || !imageUrls.length) return;
+      
+      wall.style.opacity = '0';
+      wall.style.pointerEvents = 'none';
+      
+      imageUrls.forEach((url) => {
+        images.push({
+          width: 800,
+          height: 600,
+          aspectRatio: 4/3,
+          url: url,
+          loaded: false
+        });
+      });
+      
+      renderPhotoWall();
+    }
+    
+    function loadImages() {
+      const loadPromises = imageUrls.map((url, index) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            if (images[index]) {
+              images[index].width = img.naturalWidth;
+              images[index].height = img.naturalHeight;
+              images[index].aspectRatio = img.naturalWidth / img.naturalHeight;
+              images[index].loaded = true;
+            }
+            resolve();
+          };
+          img.onerror = () => {
+            if (images[index]) {
+              images[index].loaded = true;
+            }
+            resolve();
+          };
+          img.src = url;
+        });
+      });
+      
+      Promise.all(loadPromises)
+        .then(() => {
+          const wall = $(wallId);
+          if (wall) {
+            wall.style.opacity = '1';
+            wall.style.pointerEvents = 'auto';
+            wall.style.transition = 'opacity 0.3s ease';
+          }
+          renderPhotoWall();
+        })
+        .catch((error) => console.error("图片加载失败:", error));
+    }
+    
+    function renderPhotoWall() {
+      const wall = $(wallId);
+      
+      if (!images.length || !wall) return;
+      
+      const screenWidth = wall.offsetWidth || window.innerWidth - 40;
+      lastWidth = screenWidth;
+      
+      wall.innerHTML = "";
+      const rowHeight = 200;
+      const gap = 10;
+      const maxPerRow = 4;
+      
+      let row = [];
+      let rowWidth = 0;
+      const rows = [];
+      
+      images.forEach((img) => {
+        const scaledWidth = rowHeight * img.aspectRatio;
+        
+        if (rowWidth + scaledWidth <= screenWidth && row.length < maxPerRow) {
+          row.push(img);
+          rowWidth += scaledWidth + gap;
+        } else {
+          if (row.length) rows.push(row);
+          row = [img];
+          rowWidth = scaledWidth + gap;
+        }
+      });
+      
+      if (row.length) rows.push(row);
+      
+      rows.forEach((row) => {
+        const rowDiv = document.createElement("div");
+        rowDiv.style.cssText = `display: flex; gap: ${gap}px; width: 100%`;
+        
+        row.forEach((img) => {
+          const item = document.createElement("div");
+          item.className = "photo-item";
+          const flex = row.length === 1 ? '1' : img.aspectRatio;
+          item.style.cssText = `flex: ${flex}; height: ${rowHeight}px`;
+          
+          const imgEl = document.createElement("img");
+          imgEl.alt = "Gallery Image";
+          imgEl.style.cssText = "width: 100%; height: 100%; object-fit: cover";
+          imgEl.className = "lazyload";
+          imgEl.dataset.src = img.url;
+          imgEl.dataset.sizes = "auto";
+
+          const link = document.createElement("a");
+          link.href = img.url;
+          link.dataset.pswpWidth = img.width;
+          link.dataset.pswpHeight = img.height;
+          link.target = "_blank";
+          link.className = "article-gallery-item";
+          link.style.cssText = "width: 100%; height: 100%";
+          link.appendChild(imgEl);
+          
+          item.appendChild(link);
+          rowDiv.appendChild(item);
+        });
+        
+        wall.appendChild(rowDiv);
+      });
+    }
+    
+    function handleResize() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(renderPhotoWall, 250);
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+{{- partial "helpers/scss.html" (dict "source" "css/gallery.scss" "temp" "gallery.scss" "target" "css/gallery.css" "ctx" .) -}}

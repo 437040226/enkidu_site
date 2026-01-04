@@ -272,6 +272,7 @@ share:
   - qq
   - weixin
   - weibo
+  - twitter
 
 # show categories card on home page
 home_categories:

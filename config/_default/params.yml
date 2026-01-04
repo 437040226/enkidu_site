@@ -61,6 +61,7 @@ sidebar: left
 social:
   bilibili: https://space.bilibili.com/38192827
   github: https://github.com/437040226
+  twitter: https://x.com/_Guo_Dou_
 
 widgets:
   - category
@@ -99,7 +100,7 @@ sort_order:
   home: default # controlled by weight
 
 layout:
-  max_width: 1600px # the max width of the main content area
+  max_width: 1500px # the max width of the main content area
 
 ########################################
 # CSS

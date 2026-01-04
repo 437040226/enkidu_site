@@ -95,9 +95,36 @@
           );
           walineInit = module.init;
         }
+        // --- 主要修改部分 ---
+        // 1. 获取完整的 URL 和原始路径
+        const fullUrl = window.location.href;
+        const rawPath = window.location.pathname;
+        const langPrefix = '/en/';
+
+        // 2. 调试信息，确认 fullUrl 的值
+        console.log('Waline Debug: 完整 URL (fullUrl):', fullUrl);
+        console.log('Waline Debug: 原始路径 (rawPath):', rawPath);
+
+        // 3. 通过检查完整 URL 来判断是否为英文页面
+        let walinePath;
+        if (fullUrl.includes(langPrefix)) {
+          // 如果完整 URL 包含 /en/，说明是英文页面
+          // 我们需要手动构造出不带 /en/ 前缀的路径
+          // 例如: /en/post/mypost1/ -> /post/mypost1/
+          // 这里我们用一个简单的替换逻辑
+          walinePath = rawPath.replace(langPrefix, '/');
+          console.log('Waline Debug: 是英文页面，处理后的路径 (walinePath):', walinePath);
+        } else {
+          // 否则，直接使用原始路径
+          walinePath = rawPath;
+          console.log('Waline Debug: 不是英文页面，直接使用原始路径。处理后的路径 (walinePath):', walinePath);
+        }
+        // --- 修改结束 ---
+
         window.walineInstance = walineInit({
           el: '.waline-comment',
           serverURL: '{{ $params.waline.serverURL }}',
+          path: walinePath,
           lang: document.documentElement.lang || 'en',
           locale: JSON.parse({{ $params.waline.locale | jsonify }}),
           emoji: JSON.parse({{ $params.waline.emoji | jsonify}}),

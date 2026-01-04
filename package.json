@@ -4,6 +4,8 @@
     "atomic-algolia": "^0.3.19"
   },
   "scripts": {
-    "algolia": "atomic-algolia"
+    "algolia:merge": "node merge-algolia.js",
+    "algolia:upload": "atomic-algolia public/algolia.json --index-name enkidu_site",
+    "algolia": "npm run algolia:merge && npm run algolia:upload"
   }
 }

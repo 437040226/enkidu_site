@@ -1,11 +1,12 @@
 {
   "dependencies": {
     "aplayer": "^1.10.1",
-    "atomic-algolia": "^0.3.19"
+    "atomic-algolia": "^0.3.19",
+    "cross-env": "^10.1.0"
   },
   "scripts": {
-    "algolia:merge": "node merge-algolia.js",
-    "algolia:upload": "atomic-algolia public/algolia.json --index-name enkidu_site",
-    "algolia": "npm run algolia:merge && npm run algolia:upload"
+    "algolia:upload1": "cross-env ALGOLIA_INDEX_NAME=enkidu_site_en ALGOLIA_INDEX_FILE=public/algolia.json atomic-algolia",
+    "algolia:upload2": "cross-env ALGOLIA_INDEX_NAME=enkidu_site_zh-cn ALGOLIA_INDEX_FILE=public/zh-cn/algolia.json atomic-algolia",
+    "algolia": "npm run algolia:upload1 && npm run algolia:upload2"
   }
 }

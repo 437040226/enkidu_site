@@ -51,7 +51,7 @@
     {{- if hasPrefix $cover "http" -}}
         {{- /* 统一使用 weserv.nl 代理所有外部图片，以防止防盗链问题 */ -}}
         {{- $encodedURL := $cover | replaceRE "^https?://" "" -}}
-        {{- $coverURL = printf "https://images.weserv.nl/?url=%s&w=300&h=200&fit=cover" $encodedURL -}}
+        {{- $coverURL = printf "https://i0.wp.com/%s" $encodedURL -}}
     {{- else -}}
         {{- /* 本地图片：直接使用相对路径 */ -}}
         {{- $coverURL = $cover | relURL -}}
@@ -83,7 +83,7 @@
 		{{- else if $cover -}}
 			<div class="post-link-card-cover-wrap">
 				<img
-					src="{{ $coverURL }}"
+					src="{{ $coverURL }}"  {{/* <-- 关键修正：使用处理过的 $coverURL */}}
 					class="no-lightbox"
 					title="{{ $title }}"
 					alt="{{ $altText }}"
@@ -101,3 +101,4 @@
 		</div>
 	</div>
 </div>
+

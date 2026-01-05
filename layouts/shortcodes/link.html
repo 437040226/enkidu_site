@@ -49,15 +49,9 @@
 
 {{- if $cover -}}
     {{- if hasPrefix $cover "http" -}}
-        {{- /* 关键修复：针对不同域名采用不同策略 */ -}}
-        {{- if in $cover "sinaimg.cn" -}}
-            {{- /* 新浪图片：直接加载原图，浏览器会带上本站 Referer */ -}}
-            {{- $coverURL = $cover -}}
-        {{- else -}}
-            {{- /* B站及其他图片：使用 weserv.nl 代理 */ -}}
-            {{- $encodedURL := $cover | replaceRE "^https?://" "" -}}
-            {{- $coverURL = printf "https://images.weserv.nl/?url=%s&w=300&h=200&fit=cover" $encodedURL -}}
-        {{- end -}}
+        {{- /* 统一使用 weserv.nl 代理所有外部图片，以防止防盗链问题 */ -}}
+        {{- $encodedURL := $cover | replaceRE "^https?://" "" -}}
+        {{- $coverURL = printf "https://images.weserv.nl/?url=%s&w=300&h=200&fit=cover" $encodedURL -}}
     {{- else -}}
         {{- /* 本地图片：直接使用相对路径 */ -}}
         {{- $coverURL = $cover | relURL -}}

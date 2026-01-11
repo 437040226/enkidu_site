@@ -42,20 +42,43 @@
 	{{- $displayTitle = $title | safeHTML -}}
 {{- end -}}
 
-{{- /* 图片处理：智能选择加载策略以兼容不同网站的防盗链 */ -}}
+{{- /* 图片处理：仅对 weibo.com/bilibili.com 使用 i0.wp.com 代理（无排除名单） */ -}}
 {{- $coverURL := "" -}}
 {{- $fallbackCover := .Site.Params.fallbackCover | default "/images/fallback-cover.png" | relURL -}}
+{{- /* 正确获取短代码传入的 title 参数，保留兜底逻辑，避免报错 */ -}}
+{{- $title := .Get "title" | default (.Page.Title | default "Default Title") }}
 {{- $altText := i18n "cover.alt" (dict "Title" $title) | default $title -}}
+{{- /* 获取短代码传入的 cover 参数 */ -}}
+{{- $cover := .Get "cover" -}}
 
 {{- if $cover -}}
     {{- if hasPrefix $cover "http" -}}
-        {{- /* 统一使用 weserv.nl 代理所有外部图片，以防止防盗链问题 */ -}}
-        {{- $encodedURL := $cover | replaceRE "^https?://" "" -}}
-        {{- $coverURL = printf "https://i0.wp.com/%s" $encodedURL -}}
+        {{- /* 正确：使用 slice 函数定义域名白名单（可遍历） */ -}}
+        {{- $proxyDomains := slice "weibo.com" "bilibili.com" "hdslb.com" "sinaimg.cn" -}}
+        {{- $needProxy := false -}}
+
+        {{- /* 仅判断是否在白名单内，无排除逻辑，简化判断流程 */ -}}
+        {{- range $proxyDomains -}}
+            {{- if in $cover . -}}
+                {{- $needProxy = true -}}
+            {{- end -}}
+        {{- end -}}
+
+        {{- if $needProxy -}}
+            {{- /* 白名单内域名：使用 https://i0.wp.com/ 代理（符合你的要求） */ -}}
+            {{- $encodedURL := $cover | replaceRE "^https?://" "" -}}
+            {{- $coverURL = printf "https://i0.wp.com/%s" $encodedURL -}}
+        {{- else -}}
+            {{- /* 非白名单外部链接：直接使用原链接，不代理 */ -}}
+            {{- $coverURL = $cover -}}
+        {{- end -}}
     {{- else -}}
         {{- /* 本地图片：直接使用相对路径 */ -}}
         {{- $coverURL = $cover | relURL -}}
     {{- end -}}
+{{- else -}}
+    {{- /* 无封面时，使用备用封面 */ -}}
+    {{- $coverURL = $fallbackCover -}}
 {{- end -}}
 
 <div class="post-link-card-wrap">

@@ -31,10 +31,8 @@
 </title>
 
 <!-- language detector -->
-<!--
 {{- $langDetectorScript := resources.Get "js/language-detector.js" | minify -}}
 <script src="{{ $langDetectorScript.RelPermalink }}"></script>  
--->
 
 <meta name="description" content="{{ .Params.description | default .Site.Params.description | safeHTML }}"/>
 {{- $keywords := default .Site.Params.keywords .Params.keywords -}}

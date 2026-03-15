@@ -8,6 +8,12 @@ defaultContentLanguage = 'zh-CN'
 enableRobotsTXT = true
 enableSitemap = true
 
+# 站点地图配置，强制生成多语言子站sitemap
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
 # 全局参数
 [params]
   keywords = ["恩奇都", "Enkidu", "FGO","FSF", "粉丝网站", "同人创作"]
@@ -32,7 +38,7 @@ enableSitemap = true
 
 
 [outputs]
-    home = ["Algolia","HTML"]
+    home = ["Algolia","HTML","Sitemap"]
 
 [outputFormats.Algolia]
     baseName = "algolia" 

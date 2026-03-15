@@ -4,6 +4,13 @@ theme = "reimu"
 languageCode = 'zh-CN'
 defaultContentLanguage = 'zh-CN'
 
+# SEO 核心
+enableRobotsTXT = true
+enableSitemap = true
+
+# 永久链接(SEO友好)
+[permalinks]
+  post = "/:year/:month/:title/"
 
 # 全局参数
 [params]

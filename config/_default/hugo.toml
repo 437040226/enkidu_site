@@ -1,8 +1,22 @@
 baseURL = 'https://enkidu.site/'
-title = 'Enkidu'
 theme = "reimu"
 languageCode = 'zh-CN'
 defaultContentLanguage = 'zh-CN'
+
+# SEO 核心
+enableRobotsTXT = true
+enableSitemap = true
+canonifyURLs = true
+
+# 永久链接(SEO友好)
+[permalinks]
+  post = "/:year/:month/:title/"
+
+# 全局参数
+[params]
+  keywords = ["恩奇都", "Enkidu", "FGO","FSF", "粉丝网站", "同人创作"]
+  og_image = "/images/Command_Spell.svg"
+  twitter_card = "summary_large_image"
 
 [languages]
     [languages.zh-CN]
@@ -10,11 +24,22 @@ defaultContentLanguage = 'zh-CN'
         hasCJKLanguage = true
         contentDir = 'content/zh-cn'
         weight = 1
+        title = "Enkidu"
+        [languages.zh-CN.params]
+            author = "Enkidu"
+            description = "恩奇都粉丝应援网站"
+            subtitle = "恩奇都粉丝应援网站"
     [languages.en]
         languageName = "English" 
         hasCJKLanguage = false
         contentDir = 'content/en'
         weight = 2
+        title = "Enkidu"
+        [languages.en.params]
+            author = "Enkidu"
+            description = "Fan Support Website"
+            subtitle = "Fan Support Website"
+
 
 [outputs]
     home = ["Algolia","HTML"]

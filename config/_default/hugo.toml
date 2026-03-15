@@ -11,7 +11,7 @@ enableSitemap = true
 # 全局参数
 [params]
   keywords = ["恩奇都", "Enkidu", "FGO","FSF", "粉丝网站", "同人创作"]
-  og_image = "/images/Command_Spell.svg"
+  og_image = "/images/banner-800w.webp"
   twitter_card = "summary_large_image"
 
 [languages]

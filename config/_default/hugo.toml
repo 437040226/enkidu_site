@@ -4,10 +4,6 @@ theme = "reimu"
 languageCode = 'zh-CN'
 defaultContentLanguage = 'zh-CN'
 
-# SEO 核心
-enableRobotsTXT = true
-enableSitemap = true
-canonifyURLs = true
 
 # 全局参数
 [params]

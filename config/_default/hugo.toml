@@ -3,6 +3,7 @@ title = "Enkidu"
 theme = "reimu"
 languageCode = 'zh-CN'
 defaultContentLanguage = 'zh-CN'
+defaultContentLanguageInSubdir = true
 
 # SEO 核心
 enableRobotsTXT = true

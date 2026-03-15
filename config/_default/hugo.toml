@@ -8,10 +8,6 @@ defaultContentLanguage = 'zh-CN'
 enableRobotsTXT = true
 enableSitemap = true
 
-# 永久链接(SEO友好)
-[permalinks]
-  post = "/:year/:month/:title/"
-
 # 全局参数
 [params]
   keywords = ["恩奇都", "Enkidu", "FGO","FSF", "粉丝网站", "同人创作"]

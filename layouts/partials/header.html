@@ -87,7 +87,10 @@
             }, 1000);
             return;
           }
-          window.location = langMap[item.dataset.value];
+          // 使用 setTimeout 延迟跳转，确保 cookie 设置完毕
+          setTimeout(() => {
+            window.location = langMap[item.dataset.value];
+          }, 100); // 延迟100毫秒，确保cookie设置后页面跳转
         });
       });
 

@@ -50,10 +50,17 @@
       </ul>
     </div>
     <script>
-      // 只加 Cookie 读写，不改动你原有逻辑
-      function setCookie(name, val) {
-        document.cookie = name + "=" + encodeURIComponent(val) + ";path=/;max-age=2592000;SameSite=Lax";
+      // 安全 Cookie 函数
+      function setCookie(name, value) {
+        try {
+          document.cookie = name + "=" + encodeURIComponent(value) + ";path=/;max-age=31536000;SameSite=Lax";
+        } catch (e) { }
       }
+      function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? decodeURIComponent(match[2]) : null;
+      }
+
       var selectSelected = document.getElementById("select-selected");
       var selectedLang = document.getElementById("selected-lang");
       var selectItems = document.getElementById("select-items");
@@ -73,22 +80,26 @@
           langMap['{{ .Language.Lang }}'] = '{{ .RelPermalink }}';
           { { - end -} }
           { { - end -} }
+
+          // 先保存 Cookie！！！
+          setCookie("preferred_lang", item.dataset.value);
+
           selectedLang.textContent = item.textContent;
           selectItems.classList.remove("show");
           selectOptions.forEach((option) => {
             option.classList.remove("selected");
           });
           item.classList.add("selected");
-          //保存语言到 cookie
-          setCookie("preferred_lang", item.dataset.value);
+
           if (item.dataset.value === '{{ $.Language.Lang }}') {
             return;
           }
           if (!langMap[item.dataset.value]) {
-            _$("#lang-tooltip").style.opacity = "1";
-            setTimeout(() => {
-              _$("#lang-tooltip").style.opacity = "0";
-            }, 1000);
+            // 兼容主题 _$ 变量，不报错
+            try {
+              _$("#lang-tooltip").style.opacity = "1";
+              setTimeout(() => { _$("#lang-tooltip").style.opacity = "0"; }, 1000);
+            } catch (e) { }
             return;
           }
           window.location = langMap[item.dataset.value];
@@ -99,6 +110,23 @@
         if (!event.target.closest(".custom-dropdown")) {
           selectItems.classList.remove("show");
           selectSelected.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      // 自动读取语言
+      document.addEventListener('DOMContentLoaded', function () {
+        const savedLang = getCookie('preferred_lang');
+        const currentLang = '{{ $.Language.Lang }}';
+        if (savedLang && savedLang !== currentLang) {
+          const langMap = {};
+          { { - with .Translations -} }
+          { { - range. -} }
+          langMap['{{ .Language.Lang }}'] = '{{ .RelPermalink }}';
+          { { - end -} }
+          { { - end -} }
+          if (langMap[savedLang]) {
+            window.location.replace(langMap[savedLang]);
+          }
         }
       });
     </script>

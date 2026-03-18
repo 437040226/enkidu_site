@@ -81,9 +81,9 @@
               }, 1000);
               return;
             }
-            window.location = langMap[item.dataset.value];
             // 保存用户选择的语言到cookie，有效期30天
             setCookie('preferred_lang', item.dataset.value, 30);
+            window.location = langMap[item.dataset.value];
           });
         });
 

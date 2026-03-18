@@ -66,6 +66,7 @@
       function _$(selector) {
         return document.querySelector(selector);
       }
+
       var selectSelected = document.getElementById("select-selected");
       var selectedLang = document.getElementById("selected-lang");
       var selectItems = document.getElementById("select-items");
@@ -91,19 +92,28 @@
             option.classList.remove("selected");
           });
           item.classList.add("selected");
-          if (item.dataset.value === '{{ $.Language.Lang }}') {
+
+          const targetLang = item.dataset.value;
+          // 如果是当前语言，不跳转
+          if (targetLang === '{{ $.Language.Lang }}') {
             return;
           }
-          if (!langMap[item.dataset.value]) {
-            _$("#lang-tooltip").style.opacity = "1";
-            setTimeout(() => {
-              _$("#lang-tooltip").style.opacity = "0";
-            }, 1000);
+          // 如果没有对应语言页面
+          if (!langMap[targetLang]) {
+            const tooltip = _$("#lang-tooltip");
+            if (tooltip) {
+              tooltip.style.opacity = "1";
+              setTimeout(() => {
+                tooltip.style.opacity = "0";
+              }, 1000);
+            }
             return;
           }
-          // 保存用户选择的语言到cookie，有效期30天
-          setCookie('preferred_lang', item.dataset.value, 30);
-          window.location = langMap[item.dataset.value];
+
+          // ✅ 保存用户选择的语言到 cookie（现在能正常执行了）
+          setCookie('preferred_lang', targetLang, 30);
+          // 跳转到对应语言页面
+          window.location.href = langMap[targetLang];
         });
       });
 

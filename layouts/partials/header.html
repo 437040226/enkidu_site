@@ -50,30 +50,21 @@
       </ul>
     </div>
     <script>
-      // 定义设置cookie的函数
+      // 1. 先定义 setCookie 函数（你原来缺失的核心代码）
       function setCookie(name, value, days) {
-        var expires = "";
+        let expires = "";
         if (days) {
-          var date = new Date();
+          const date = new Date();
           date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
           expires = "; expires=" + date.toUTCString();
         }
-        // 使用 encodeURIComponent 确保特殊字符正确编码
-        document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/; SameSite=Lax";
+        // 关键：path=/ 保证全站生效
+        document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
       }
 
-      // 定义获取cookie的函数
-      function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-          var c = ca[i];
-          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-          if (c.indexOf(nameEQ) === 0) {
-            return decodeURIComponent(c.substring(nameEQ.length, c.length));
-          }
-        }
-        return null;
+      // 2. 修复 _$ 未定义问题（你原来用了 _$("#lang-tooltip") 会报错）
+      function _$(selector) {
+        return document.querySelector(selector);
       }
       var selectSelected = document.getElementById("select-selected");
       var selectedLang = document.getElementById("selected-lang");

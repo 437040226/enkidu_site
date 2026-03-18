@@ -60,7 +60,12 @@
         var expanded = selectSelected.getAttribute("aria-expanded") === "true";
         selectSelected.setAttribute("aria-expanded", (!expanded).toString());
       });
-
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".custom-dropdown")) {
+          selectItems.classList.remove("show");
+          selectSelected.setAttribute("aria-expanded", "false");
+        }
+      });
       selectOptions.forEach((item) => {
         item.addEventListener("click", () => {
           const langMap = {};
@@ -75,8 +80,6 @@
             option.classList.remove("selected");
           });
           item.classList.add("selected");
-          // 设置 cookie 记录 preferred_lang
-          document.cookie = "preferred_lang=" + item.dataset.value + "; path=/; max-age=31536000"; // 设置为一年
           if (item.dataset.value === '{{ $.Language.Lang }}') {
             return;
           }
@@ -87,19 +90,11 @@
             }, 1000);
             return;
           }
-          // 使用 setTimeout 延迟跳转，确保 cookie 设置完毕
-          setTimeout(() => {
-            window.location = langMap[item.dataset.value];
-          }, 100); // 延迟100毫秒，确保cookie设置后页面跳转
+          window.location = langMap[item.dataset.value];
         });
       });
 
-      document.addEventListener("click", (event) => {
-        if (!event.target.closest(".custom-dropdown")) {
-          selectItems.classList.remove("show");
-          selectSelected.setAttribute("aria-expanded", "false");
-        }
-      });
+
     </script>
   </nav>
   {{- end -}}

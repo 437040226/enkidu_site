@@ -1,5 +1,5 @@
 baseURL = 'https://enkidu.site/'
-title = "Enkidu"
+title = "Enkidu Site"
 theme = "reimu"
 languageCode = 'zh-CN'
 defaultContentLanguage = 'zh-cn' #与文件夹路径保持统一小写
